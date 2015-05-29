@@ -10,7 +10,7 @@ library("scales")
 # todate <- as.Date("2015-05-29")
 
 ## read in data
-dat <- read.csv("data/github_commits.csv")[,-1]
+dat <- read.csv("data/github_commits")[,-1]
 dat$date <- as.Date(dat$date)
 non_core_dat <- tbl_df(dat) %>%
   filter(!author %in% c("sckott", "karthik", "cboettig"))
