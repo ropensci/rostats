@@ -19,5 +19,3 @@ Note about Data: Data in the `data/github_commits.csv` dir works right away with
 ## cummulative contributors
 
 ![cumcontribs](assets/img/cummcontribs.png)
-
-[![ropensci](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
