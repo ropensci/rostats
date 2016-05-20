@@ -1,0 +1,8 @@
+.gitignore
+^Makefile$
+^\.travis.yml$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.Rhistory$
+^README\.Rmd$
+^\.httr-oauth$

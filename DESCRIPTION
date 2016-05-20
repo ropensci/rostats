@@ -1,0 +1,22 @@
+Package: rostats
+Title: rOpenSci stats reporting tools
+Description: rOpenSci stats reporting tools.
+Version: 0.1.1.9000
+License: MIT + file LICENSE
+Authors@R: person("Scott", "Chamberlain", role = c("aut", "cre"), email = "myrmecocystus@gmail.com")
+URL: https://github.com/ropensci/rostats
+BugReports: https://github.com/ropensci/rostats/issues
+Imports:
+    httr (>= 1.1.0),
+    jsonlite,
+    dplyr,
+    plyr,
+    stringr,
+    ropkgs,
+    ggplot2,
+    reshape,
+    scales,
+    xml2,
+    cranlogs
+RoxygenNote: 5.0.1
+Remotes: ropensci/ropkgs
