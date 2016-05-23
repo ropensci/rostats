@@ -31,11 +31,18 @@ pkgs <- df$packages \%>\%
 
 gather_cran(pkgs[1])
 
+# get first date on CRAN for each pkg
 res <- gather_crans(pkgs)
 alldat <- dplyr::bind_rows(res)
 cran_first_date(alldat)
 
 # gather_crans(pkgs$name)
+
+# get new packages on CRAN, arranged by date
+alldat \%>\% cran_first_date() \%>\% arrange(desc(date)) \%>\% top_n(20)
+
+# get new packages & new versions on CRAN, arranged by date
+alldat \%>\% arrange(desc(date)) \%>\% top_n(20)
 }
 }
 
