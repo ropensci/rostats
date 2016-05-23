@@ -9,7 +9,8 @@
 #' @param to (Date) A date to end at. Default: \code{Sys.Date() - 1}
 #' @param file A date, or other character string to make the file
 #' ending unique. Default: \code{Sys.Date()}
-#' @return writes a data.frame to extdata/, returns path to file
+#' @return writes a data.frame to \code{rappdirs::user_cache_dir("rostats")},
+#' prints message of path to file, and returns file path itself
 #' @examples \dontrun{
 #' pkgs <- ropensci_pkgs(TRUE)$name
 #' gather_downloads(x = pkgs[1:10])
@@ -23,7 +24,10 @@ gather_downloads <- function(x, from = NULL, to = Sys.Date() - 1, file = Sys.Dat
     dd
   })
   df <- dplyr::bind_rows(out)
-  ff <- paste0("extdata/cran_downloads_", file, ".csv")
+  dir <- rappdirs::user_cache_dir("rostats")
+  if (!file.exists(dir)) dir.create(dir, recursive = TRUE)
+  ff <- file.path(dir, paste0("cran_downloads_", file, ".csv"))
   write.csv(df, file = ff, row.names = FALSE)
   message("data written to ", ff)
+  return(ff)
 }

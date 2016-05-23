@@ -19,8 +19,8 @@ Cummulative commits plot
 }
 \examples{
 \dontrun{
-cum_contribs("github_commits_2016-05-19.csv")
-cum_contribs("github_commits_2016-05-19.csv", exclude_core = TRUE)
+cum_contribs("github_commits_2016-05-23.csv")
+cum_contribs("github_commits_2016-05-23.csv", exclude_core = TRUE)
 }
 }
 

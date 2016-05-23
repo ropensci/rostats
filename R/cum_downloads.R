@@ -5,7 +5,7 @@
 #' @param top_n (numeric/integer) number of packages to plot data for,
 #' starting from the most downloaded
 #' @examples \dontrun{
-#' cum_downloads(x = "cran_downloads_2016-05-20.csv")
+#' cum_downloads(x = "cran_downloads_2016-05-23.csv")
 #' }
 cum_downloads <- function(x, top_n = 10) {
 

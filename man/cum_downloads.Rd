@@ -17,7 +17,7 @@ Cummulative downloads plot
 }
 \examples{
 \dontrun{
-cum_downloads(x = "cran_downloads_2016-05-20.csv")
+cum_downloads(x = "cran_downloads_2016-05-23.csv")
 }
 }
 

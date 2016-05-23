@@ -20,7 +20,8 @@ and \code{\link{cran_first_date}}}
 ending unique. Default: \code{Sys.Date()}}
 }
 \value{
-writes a data.frame to extdata/, returns path to file
+writes a data.frame to \code{rappdirs::user_cache_dir("rostats")},
+prints message of path to file, and returns file path itself
 }
 \description{
 Get rOpenSci commits

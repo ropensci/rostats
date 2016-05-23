@@ -17,7 +17,8 @@ ending unique. Default: \code{Sys.Date()}}
 we look in your env vars for GITHUB_PAT}
 }
 \value{
-writes a data.frame to extdata/, returns path to file
+writes a data.frame to \code{rappdirs::user_cache_dir("rostats")},
+prints message of path to file, and returns file path itself
 }
 \description{
 Get rOpenSci commits
@@ -25,7 +26,7 @@ Get rOpenSci commits
 \examples{
 \dontrun{
 pkgs <- ropensci_pkgs()
-gather_commits(x = pkgs$owner_repo[1:10])
+gather_commits(x = pkgs$owner_repo[1:3])
 gather_commits(x = pkgs$owner_repo)
 }
 }

@@ -5,8 +5,8 @@
 #' @param exclude (character) github user names to exclude
 #' @param exclude_core (logical) exclude core user names. Default: \code{FALSE}
 #' @examples \dontrun{
-#' cum_commits(x = "github_commits_2016-05-19.csv")
-#' cum_commits(x = "github_commits_2016-05-19.csv", exclude_core = TRUE)
+#' cum_commits(x = "github_commits_2016-05-23.csv")
+#' cum_commits(x = "github_commits_2016-05-23.csv", exclude_core = TRUE)
 #' }
 cum_commits <- function(x, exclude = c("sckott", "karthik", "cboettig", "jeroenooms"),
                         exclude_core = FALSE) {

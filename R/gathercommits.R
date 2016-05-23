@@ -7,10 +7,11 @@
 #' ending unique. Default: \code{Sys.Date()}
 #' @param token A GitHub Personal Access Token (PAT). If not given,
 #' we look in your env vars for GITHUB_PAT
-#' @return writes a data.frame to extdata/, returns path to file
+#' @return writes a data.frame to \code{rappdirs::user_cache_dir("rostats")},
+#' prints message of path to file, and returns file path itself
 #' @examples \dontrun{
 #' pkgs <- ropensci_pkgs()
-#' gather_commits(x = pkgs$owner_repo[1:10])
+#' gather_commits(x = pkgs$owner_repo[1:3])
 #' gather_commits(x = pkgs$owner_repo)
 #' }
 gather_commits <- function(x, file = Sys.Date(), token = NULL) {
@@ -28,7 +29,10 @@ gather_commits <- function(x, file = Sys.Date(), token = NULL) {
   df <- dplyr::bind_rows(out2)
   outbrief <- setNames(df[, c('author.login', 'commit.committer.date', 'pkgname')],
                        c("author", "date", "pkg"))
-  ff <- paste0("extdata/github_commits_", file, ".csv")
+  dir <- rappdirs::user_cache_dir("rostats")
+  if (!file.exists(dir)) dir.create(dir, recursive = TRUE)
+  ff <- file.path(dir, paste0("github_commits_", file, ".csv"))
   write.csv(outbrief, file = ff, row.names = FALSE)
   message("data written to ", ff)
+  return(ff)
 }
