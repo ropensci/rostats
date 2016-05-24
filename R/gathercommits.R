@@ -29,7 +29,7 @@ gather_commits <- function(x, file = Sys.Date(), token = NULL) {
   df <- dplyr::bind_rows(out2)
   outbrief <- setNames(df[, c('author.login', 'commit.committer.date', 'pkgname')],
                        c("author", "date", "pkg"))
-  dir <- rappdirs::user_cache_dir("rostats")
+  dir <- file.path(rappdirs::user_cache_dir("rostats"), "commits")
   if (!file.exists(dir)) dir.create(dir, recursive = TRUE)
   ff <- file.path(dir, paste0("github_commits_", file, ".csv"))
   write.csv(outbrief, file = ff, row.names = FALSE)

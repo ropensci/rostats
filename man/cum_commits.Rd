@@ -4,11 +4,13 @@
 \alias{cum_commits}
 \title{Cummulative commits plot}
 \usage{
-cum_commits(x, exclude = c("sckott", "karthik", "cboettig", "jeroenooms"),
-  exclude_core = FALSE)
+cum_commits(x = NULL, exclude = c("sckott", "karthik", "cboettig",
+  "jeroenooms"), exclude_core = FALSE)
 }
 \arguments{
-\item{x}{File name, e.g., github_commits_2016-05-19.csv. Required.}
+\item{x}{File name, e.g., github_commits_2016-05-19.csv. Default is \code{NULL},
+and if so, we look for file with most recent date in its file name in
+\code{rappdirs::user_cache_dir("rostats")} + "/commits/"}
 
 \item{exclude}{(character) github user names to exclude}
 
@@ -19,8 +21,8 @@ Cummulative commits plot
 }
 \examples{
 \dontrun{
-cum_commits(x = "github_commits_2016-05-23.csv")
-cum_commits(x = "github_commits_2016-05-23.csv", exclude_core = TRUE)
+cum_commits()
+cum_commits(exclude_core = TRUE)
 }
 }
 

@@ -4,10 +4,12 @@
 \alias{cum_downloads}
 \title{Cummulative downloads plot}
 \usage{
-cum_downloads(x, top_n = 10)
+cum_downloads(x = NULL, top_n = 10)
 }
 \arguments{
-\item{x}{File name, e.g., cran_downloads_2016-05-20.csv. Required.}
+\item{x}{File name, e.g., cran_downloads_2016-05-19.csv. Default is \code{NULL},
+and if so, we look for file with most recent date in its file name in
+\code{rappdirs::user_cache_dir("rostats")} + "/cran_downloads/"}
 
 \item{top_n}{(numeric/integer) number of packages to plot data for,
 starting from the most downloaded}
@@ -17,7 +19,7 @@ Cummulative downloads plot
 }
 \examples{
 \dontrun{
-cum_downloads(x = "cran_downloads_2016-05-23.csv")
+cum_downloads()
 }
 }
 

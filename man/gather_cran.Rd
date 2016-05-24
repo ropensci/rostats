@@ -18,6 +18,11 @@ cran_first_date(x)
 \description{
 Gather CRAN details
 }
+\details{
+While \code{\link{gather_commits}} and \code{\link{gather_downloads}} cache
+data because data can take a long time to download, this function shouldn't take that
+long, even with hundreds of of pkgs.
+}
 \examples{
 \dontrun{
 gather_cran("taxize")

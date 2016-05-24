@@ -20,8 +20,8 @@ and \code{\link{cran_first_date}}}
 ending unique. Default: \code{Sys.Date()}}
 }
 \value{
-writes a data.frame to \code{rappdirs::user_cache_dir("rostats")},
-prints message of path to file, and returns file path itself
+writes a data.frame to \code{rappdirs::user_cache_dir("rostats")} +
+'/cran_downloads/', prints message of path to file, and returns file path itself
 }
 \description{
 Get rOpenSci commits
@@ -29,7 +29,7 @@ Get rOpenSci commits
 \examples{
 \dontrun{
 pkgs <- ropensci_pkgs(TRUE)$name
-gather_downloads(x = pkgs[1:10])
+gather_downloads(x = pkgs[1:3])
 # gather_downloads(x = pkgs)
 }
 }

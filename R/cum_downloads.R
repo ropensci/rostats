@@ -1,18 +1,20 @@
 #' Cummulative downloads plot
 #'
 #' @export
-#' @param x File name, e.g., cran_downloads_2016-05-20.csv. Required.
+#' @param x File name, e.g., cran_downloads_2016-05-19.csv. Default is \code{NULL},
+#' and if so, we look for file with most recent date in its file name in
+#' \code{rappdirs::user_cache_dir("rostats")} + "/cran_downloads/"
 #' @param top_n (numeric/integer) number of packages to plot data for,
 #' starting from the most downloaded
 #' @examples \dontrun{
-#' cum_downloads(x = "cran_downloads_2016-05-23.csv")
+#' cum_downloads()
 #' }
-cum_downloads <- function(x, top_n = 10) {
+cum_downloads <- function(x = NULL, top_n = 10) {
 
   if (!class(top_n) %in% c("numeric", "integer")) {
     stop("top_n must be numeric or integer", call. = FALSE)
   }
-  dat <- dplyr::tbl_df(get_file(x))
+  dat <- dplyr::tbl_df(get_cran(x))
 
   ## summarise
   dat <- dplyr::bind_rows(lapply(split(dat, dat$package), function(z) {

@@ -21,12 +21,36 @@ knitr::opts_chunk$set(
 library("rostats")
 ```
 
+## Get data
+
+If you haven't downloaded data yet, get data:
+
+Get Github commits
+
+```{r eval=FALSE}
+pkgs <- ropensci_pkgs()
+gather_commits(pkgs$owner_repo)
+```
+
+Get CRAN downloads
+
+```{r eval=FALSE}
+pkgs <- ropensci_pkgs(TRUE)$name
+gather_downloads(x = pkgs)
+```
+
+These both download to directories in `rappdirs::user_cache_dir("rostats")`
+
+For the below plotting functions, you can pass a particular file name, just the 
+base name, not full path, or leave it as `NULL` and it uses file with the 
+most recent date
+
 ## Code contributions
 
 Git commit history
 
 ```{r}
-cum_commits("github_commits_2016-05-19.csv")
+cum_commits()
 ```
 
 ## Contributors
@@ -34,7 +58,7 @@ cum_commits("github_commits_2016-05-19.csv")
 Cumulative number of contributors
 
 ```{r}
-cum_contribs("github_commits_2016-05-19.csv")
+cum_contribs()
 ```
 
 ## New packages on CRAN
@@ -77,6 +101,6 @@ at [https://cran.rstudio.com](https://cran.rstudio.com)
 
 ```{r}
 library("ggplot2")
-cum_downloads("cran_downloads_2016-05-20.csv") %+%
+cum_downloads() %+%
   facet_wrap(~package, scales = "free_y", ncol = 2)
 ```
