@@ -38,7 +38,15 @@ gather_cran <- function(pkg) {
   if (is.na(pubdate)) {
     dfnew <- dplyr::data_frame(pkg = pkg, name = NA, date = pubdate)
   } else {
-    dfnew <- dplyr::data_frame(pkg = pkg, name = 'current_version', date = pubdate)
+    html3 <- strsplit(html2, "\n")[[1]]
+    pos <- grep("version:", html3, ignore.case = TRUE)
+    if (length(pos) == 0) {
+      name <- if (any(grepl("archived", html3, ignore.case = TRUE))) "archived" else NA_character_
+      dfnew <- dplyr::data_frame(pkg = pkg, name = name, date = pubdate)
+    } else {
+      name <- xml2::xml_text(xml2::read_xml(html3[pos + 1]))
+      dfnew <- dplyr::data_frame(pkg = pkg, name = name, date = pubdate)
+    }
   }
 
   df <- dplyr::data_frame()
@@ -54,6 +62,7 @@ gather_cran <- function(pkg) {
       names(df) <- c('name', 'date')
       df$pkg <- pkg
       df$date <- as.Date(df$date, "%d-%b-%Y")
+      df$name <- gsub(paste0(pkg, "|.tar.gz|_"), "", df$name)
     }
   }
 

@@ -4,3 +4,7 @@
 #   dat$date <- as.Date(dat$date)
 #   return(dat)
 # }
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
