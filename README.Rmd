@@ -11,7 +11,7 @@ Package API
 * `gather_downloads()` - gather cran.rstudio.com (cranlogs) downloads
 * `cum_commits()` - visualize cummulative commits through time
 * `cum_contribs()` - visualize cummulative number of contributors through time
-* `cum_contribs()` - visualize cummulative CRAN downloads by package
+* `cum_downloads()` - visualize cummulative CRAN downloads by package
 
 Recently updated data cached:
 

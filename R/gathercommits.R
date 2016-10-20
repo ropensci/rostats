@@ -10,6 +10,8 @@
 #' @return writes a data.frame to \code{rappdirs::user_cache_dir("rostats")},
 #' prints message of path to file, and returns file path itself
 #' @examples \dontrun{
+#' library("dplyr")
+#' library("ropkgs")
 #' pkgs <- ropensci_pkgs()
 #' gather_commits(x = pkgs$owner_repo[1:3])
 #' gather_commits(x = pkgs$owner_repo)

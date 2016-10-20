@@ -54,3 +54,16 @@ gh_commits_count <- function(repo, token = NULL, since = "2011-05-03T00:00:00Z",
 }
 
 ct <- function(l) Filter(Negate(is.null), l)
+
+
+stats_contribs <- function(repo, token = NULL, ...) {
+  token <- get_token(token)
+  res <- httr::GET(make_url(repo, "stats/contributors"), token, ...)
+  process_result(res)
+}
+
+gh_user <- function(x, token = NULL, ...) {
+  token <- get_token(token)
+  res <- httr::GET(paste0("https://api.github.com/users/", x), token, ...)
+  process_result(res)
+}

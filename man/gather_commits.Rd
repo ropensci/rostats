@@ -25,6 +25,8 @@ Get rOpenSci commits
 }
 \examples{
 \dontrun{
+library("dplyr")
+library("ropkgs")
 pkgs <- ropensci_pkgs()
 gather_commits(x = pkgs$owner_repo[1:3])
 gather_commits(x = pkgs$owner_repo)
