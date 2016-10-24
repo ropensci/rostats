@@ -1,6 +1,6 @@
 get_token <- function(x = NULL) {
   if (is.null(x)) {
-    x <- Sys.getenv('GITHUB_PAT')
+    x <- Sys.getenv('GITHUB_PAT_ROSTATS')
     if (nchar(x) == 0) {
       stop("no Github PAT found", call. = FALSE)
     }
@@ -28,16 +28,59 @@ gh_rate_limit <- function(token = NULL, ...) {
 
 # 2011-05-04 was our first commit to ropensci
 gh_commits_count <- function(repo, token = NULL, since = "2011-05-03T00:00:00Z", ...) {
-  #token <- github_auth()
+  url <- make_url(repo, "commits")
+  gh_while(url, ct(list(per_page = 100, since = since)), token, ...)
+}
+
+ct <- function(l) Filter(Negate(is.null), l)
+
+
+stats_contribs <- function(repo, token = NULL, ...) {
+  token <- get_token(token)
+  res <- httr::GET(make_url(repo, "stats/contributors"), token, ...)
+  process_result(res)
+}
+
+gh_user <- function(x, token = NULL, ...) {
+  res <- httr::GET(paste0("https://api.github.com/users/", x), get_token(token), ...)
+  process_result(res)
+}
+
+gh_org_issues <- function(x, token = NULL, ...) {
+  res <- httr::GET(sprintf("https://api.github.com/orgs/%s/issues", x), get_token(token), ...)
+  process_result(res)
+}
+
+gh_repo_issues <- function(owner, repo, state = "open", since = NULL, token = NULL, ...) {
+  res <- httr::GET(
+    sprintf("https://api.github.com/repos/%s/%s/issues", owner, repo),
+    query = ct(list(state = state, since = since)),
+    get_token(token),
+    ...
+  )
+  process_result(res)
+}
+
+gh_issue_comments <- function(owner, repo, state = "open", since = NULL, token = NULL, ...) {
+  url <- sprintf("https://api.github.com/repos/%s/%s/issues/comments", owner, repo)
+  gh_while(url, ct(list(per_page = 100, since = since)), token, ...)
+}
+
+gh_repos <- function(owner, type = "public", token = NULL, ...) {
+  url <- sprintf("https://api.github.com/orgs/%s/repos", owner)
+  gh_while(url, ct(list(per_page = 100, since = NULL)), token, ...)
+}
+
+
+gh_while <- function(url, args, token, ...) {
   token <- get_token(token)
   outout <- list(); iter <- 0; nexturl <- "dontstop"
   while (nexturl != "stop") {
     iter <- iter + 1
     req <- if (grepl("https:/", nexturl)) {
-      httr::GET(nexturl, token)
+      httr::GET(nexturl, token, ...)
     } else {
-      httr::GET(make_url(repo, "commits"),
-          query = list(per_page = 100, since = since), token)
+      httr::GET(url, query = args, token, ...)
     }
     outout[[iter]] <- process_result(req)
     link <- req$headers$link
@@ -51,19 +94,4 @@ gh_commits_count <- function(repo, token = NULL, since = "2011-05-03T00:00:00Z",
   }
   outout <- outout[sapply(outout, function(x) !identical(x, list()))]
   dplyr::bind_rows(outout)
-}
-
-ct <- function(l) Filter(Negate(is.null), l)
-
-
-stats_contribs <- function(repo, token = NULL, ...) {
-  token <- get_token(token)
-  res <- httr::GET(make_url(repo, "stats/contributors"), token, ...)
-  process_result(res)
-}
-
-gh_user <- function(x, token = NULL, ...) {
-  token <- get_token(token)
-  res <- httr::GET(paste0("https://api.github.com/users/", x), token, ...)
-  process_result(res)
 }
