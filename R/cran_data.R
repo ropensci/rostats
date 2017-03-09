@@ -12,7 +12,8 @@
 #' library("dplyr")
 #' df <- ro_pkgs()
 #' pkgs <- df$packages %>%
-#'   filter(on_cran) %>%
+#'   filter(on_cran, !cran_archived) %>%
+#'   filter(name != "pleiades") %>%
 #'   # filter(on_cran | on_bioc) %>%
 #'   .$name
 #'
@@ -25,10 +26,10 @@
 #' # gather_crans(pkgs$name)
 #'
 #' # get new packages on CRAN, arranged by date
-#' alldat %>% cran_first_date() %>% arrange(desc(date)) %>% top_n(20)
+#' alldat %>% cran_first_date() %>% arrange(desc(date)) %>% top_n(10)
 #'
 #' # get new packages & new versions on CRAN, arranged by date
-#' alldat %>% arrange(desc(date)) %>% filter(date > '2016-09-01') %>% top_n(20)
+#' alldat %>% arrange(desc(date)) %>% filter(date > '2016-12-05') %>% top_n(20)
 #' }
 gather_cran <- function(pkg) {
   urinew <- sprintf('https://cran.rstudio.com/web/packages/%s/index.html', pkg)
@@ -60,13 +61,20 @@ gather_cran <- function(pkg) {
       df <- na.omit(out[,!names(out) %in% c('','Description')])[-1,]
       df <- df[, c('Name', 'Last modified')]
       names(df) <- c('name', 'date')
+      # remove parent directory
+      remov <- grep("parent", df$name, ignore.case = TRUE)
+      if (length(remov) > 0) {
+        df <- df[-remov, ]
+      }
+      # remove any rows with no version
+      df <- df[!df$name == "", ]
       df$pkg <- pkg
       df$date <- as.Date(df$date, "%d-%b-%Y")
       df$name <- gsub(paste0(pkg, "|.tar.gz|_"), "", df$name)
     }
   }
 
-  rbind(dfnew, df)
+  dplyr::arrange_(rbind(dfnew, df), "desc(name)")
 }
 
 #' @export

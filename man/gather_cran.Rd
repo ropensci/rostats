@@ -44,10 +44,10 @@ alldat <- dplyr::bind_rows(res)
 # gather_crans(pkgs$name)
 
 # get new packages on CRAN, arranged by date
-alldat \%>\% cran_first_date() \%>\% arrange(desc(date)) \%>\% top_n(20)
+alldat \%>\% cran_first_date() \%>\% arrange(desc(date)) \%>\% top_n(10)
 
 # get new packages & new versions on CRAN, arranged by date
-alldat \%>\% arrange(desc(date)) \%>\% filter(date > '2016-09-01') \%>\% top_n(20)
+alldat \%>\% arrange(desc(date)) \%>\% filter(date > '2016-10-20') \%>\% top_n(20)
 }
 }
 
