@@ -12,6 +12,7 @@
 #' @examples \dontrun{
 #' library("dplyr")
 #' library("ropkgs")
+#' library("rostats")
 #' pkgs <- ropensci_pkgs()
 #' gather_commits(x = pkgs$owner_repo[1:3])
 #' gather_commits(x = pkgs$owner_repo)
@@ -29,8 +30,8 @@ gather_commits <- function(x, file = Sys.Date(), token = NULL) {
   }, out, x)
   out2 <- ct(out2)
   df <- dplyr::bind_rows(out2)
-  outbrief <- setNames(df[, c('author.login', 'commit.committer.date', 'pkgname')],
-                       c("author", "date", "pkg"))
+  outbrief <- setNames(df[, c('author.login', 'commit.committer.date',
+                              'pkgname')], c("author", "date", "pkg"))
   dir <- file.path(rappdirs::user_cache_dir("rostats"), "commits")
   if (!file.exists(dir)) dir.create(dir, recursive = TRUE)
   ff <- file.path(dir, paste0("github_commits_", file, ".csv"))

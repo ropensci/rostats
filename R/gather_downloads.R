@@ -12,13 +12,21 @@
 #' @return writes a data.frame to \code{rappdirs::user_cache_dir("rostats")} +
 #' '/cran_downloads/', prints message of path to file, and returns file path itself
 #' @examples \dontrun{
-#' pkgs <- ropensci_pkgs(TRUE)$name
-#' gather_downloads(x = pkgs[1:3])
+#' library("ropkgs")
+#' library("dplyr")
+#' df <- ro_pkgs()
+#' pkgs <- tbl_df(df$packages) %>%
+#'   filter(on_cran) %>%
+#'   .$name %>%
+#'   sort
+#' pkgs <- sub("redland-bindings", "redland", pkgs)
+#' gather_downloads(x = pkgs[1])
 #' # gather_downloads(x = pkgs)
 #' }
 gather_downloads <- function(x, from = NULL, to = Sys.Date() - 1, file = Sys.Date()) {
   out <- lapply(x, function(z) {
     tmp <- cran_first_date(gather_cran(z))
+    if (NROW(tmp) > 1) tmp <- tmp[NROW(tmp),]
     dd <- cranlogs::cran_downloads(z, from = tmp$date, to = to)
     row.names(dd) <- NULL
     dd

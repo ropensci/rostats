@@ -10,7 +10,7 @@
 #' cum_contribs()
 #' cum_contribs(exclude_core = TRUE)
 #' }
-cum_contribs <- function(x = NULL, exclude = c("sckott", "karthik", "cboettig", "jeroenooms"),
+cum_contribs <- function(x = NULL, exclude = c("sckott", "karthik", "cboettig", "jeroenooms", "jeroen"),
                          exclude_core = FALSE) {
   dat <- dplyr::tbl_df(get_github(x))
   if (exclude_core) dat <- dplyr::filter(dat, !author %in% exclude)

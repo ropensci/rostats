@@ -10,12 +10,14 @@
 #'
 #' library("ropkgs")
 #' library("dplyr")
-#' df <- ro_pkgs()
-#' pkgs <- df$packages %>%
+#' #df <- ro_pkgs()
+#' url <- "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/registry.json"
+#' df <- jsonlite::fromJSON(url)
+#' (pkgs <- tbl_df(df$packages) %>%
 #'   filter(on_cran, !cran_archived) %>%
 #'   filter(name != "pleiades") %>%
 #'   # filter(on_cran | on_bioc) %>%
-#'   .$name
+#'   .$name)
 #'
 #' gather_cran(pkgs[1])
 #'
@@ -29,7 +31,7 @@
 #' alldat %>% cran_first_date() %>% arrange(desc(date)) %>% top_n(10)
 #'
 #' # get new packages & new versions on CRAN, arranged by date
-#' alldat %>% arrange(desc(date)) %>% filter(date > '2016-12-05') %>% top_n(20)
+#' alldat %>% arrange(desc(date)) %>% filter(date > '2017-06-15') %>% top_n(30)
 #' }
 gather_cran <- function(pkg) {
   urinew <- sprintf('https://cran.rstudio.com/web/packages/%s/index.html', pkg)
