@@ -27,6 +27,7 @@ gather_downloads <- function(x, from = NULL, to = Sys.Date() - 1, file = Sys.Dat
   out <- lapply(x, function(z) {
     tmp <- cran_first_date(gather_cran(z))
     if (NROW(tmp) > 1) tmp <- tmp[NROW(tmp),]
+    if (tmp$date == Sys.Date()) return(dplyr::data_frame())
     dd <- cranlogs::cran_downloads(z, from = tmp$date, to = to)
     row.names(dd) <- NULL
     dd

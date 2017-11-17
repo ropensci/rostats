@@ -22,4 +22,3 @@ Cummulative downloads plot
 cum_downloads()
 }
 }
-

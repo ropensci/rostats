@@ -19,5 +19,5 @@ Imports:
     xml2,
     cranlogs,
     rappdirs
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Remotes: ropensci/ropkgs

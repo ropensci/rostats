@@ -21,4 +21,3 @@ Read data from file path in package
 \details{
 file must be in \code{extdata}
 }
-

@@ -2,10 +2,9 @@
 % Please edit documentation in R/rostats-package.R
 \docType{package}
 \name{rostats-package}
-\alias{rostats}
 \alias{rostats-package}
+\alias{rostats}
 \title{rOpensci stats reporting}
 \description{
 rOpensci stats reporting
 }
-

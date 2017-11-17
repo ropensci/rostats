@@ -18,4 +18,3 @@ ropensci_pkgs()
 ropensci_pkgs(TRUE)
 }
 }
-

@@ -28,9 +28,15 @@ Get rOpenSci commits
 }
 \examples{
 \dontrun{
-pkgs <- ropensci_pkgs(TRUE)$name
-gather_downloads(x = pkgs[1:3])
+library("ropkgs")
+library("dplyr")
+df <- ro_pkgs()
+pkgs <- tbl_df(df$packages) \%>\%
+  filter(on_cran) \%>\%
+  .$name \%>\%
+  sort
+pkgs <- sub("redland-bindings", "redland", pkgs)
+gather_downloads(x = pkgs[1])
 # gather_downloads(x = pkgs)
 }
 }
-
