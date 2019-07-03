@@ -1,4 +1,4 @@
-#' Get rOpenSci commits
+#' Get CRAN downloads
 #'
 #' @export
 #' @param x One or more R packages, of the form \code{ropensci/rfishbase},
@@ -21,22 +21,25 @@
 #'   sort
 #' pkgs <- sub("redland-bindings", "redland", pkgs)
 #' gather_downloads(x = pkgs[1])
+#' # gather_downloads(x = pkgs[1:3])
 #' # gather_downloads(x = pkgs)
 #' }
 gather_downloads <- function(x, from = NULL, to = Sys.Date() - 1, file = Sys.Date()) {
-  out <- lapply(x, function(z) {
+  out <- plyr::llply(x, function(z) {
     tmp <- cran_first_date(gather_cran(z))
+    if (NROW(stats::na.omit(tmp)) == 0) return(dplyr::data_frame())
     if (NROW(tmp) > 1) tmp <- tmp[NROW(tmp),]
     if (tmp$date == Sys.Date()) return(dplyr::data_frame())
+    if (tmp$date > to) return(dplyr::data_frame())
     dd <- cranlogs::cran_downloads(z, from = tmp$date, to = to)
     row.names(dd) <- NULL
     dd
-  })
+  }, .inform = TRUE)
   df <- dplyr::bind_rows(out)
   dir <- file.path(rappdirs::user_cache_dir("rostats"), "cran_downloads")
   if (!file.exists(dir)) dir.create(dir, recursive = TRUE)
   ff <- file.path(dir, paste0("cran_downloads_", file, ".csv"))
-  write.csv(df, file = ff, row.names = FALSE)
+  utils::write.csv(df, file = ff, row.names = FALSE)
   message("data written to ", ff)
   return(ff)
 }

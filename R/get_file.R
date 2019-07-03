@@ -12,7 +12,7 @@ get_cran <- function(x) {
 #' @export
 #' @rdname get_cran
 get_github <- function(x) {
-  dir <- file.path(rappdirs::user_cache_dir("rostats"), "commits")
+  dir <- file.path(rappdirs::user_cache_dir("R/rostats"), "commits")
   get_file(dir, x, "gather_commits()")
 }
 
@@ -28,7 +28,7 @@ get_file <- function(dir, x, y) {
   }
   ff <- file.path(dir, x)
   if (!file.exists(ff)) stop("file ", x, sprintf(" does not exist\n  Run %s to get data", y), call. = FALSE)
-  dat <- read.csv(ff, stringsAsFactors = FALSE)
+  dat <- utils::read.csv(ff, stringsAsFactors = FALSE)
   dat$date <- as.Date(dat$date)
   return(dat)
 }

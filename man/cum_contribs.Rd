@@ -5,7 +5,7 @@
 \title{Cummulative commits plot}
 \usage{
 cum_contribs(x = NULL, exclude = c("sckott", "karthik", "cboettig",
-  "jeroenooms", "jeroen"), exclude_core = FALSE)
+  "jeroenooms", "jeroen", "maelle"), exclude_core = FALSE)
 }
 \arguments{
 \item{x}{File name, e.g., github_commits_2016-05-19.csv. Default is \code{NULL},

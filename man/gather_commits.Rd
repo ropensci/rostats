@@ -29,7 +29,21 @@ library("dplyr")
 library("ropkgs")
 library("rostats")
 pkgs <- ropensci_pkgs()
-gather_commits(x = pkgs$owner_repo[1:3])
-gather_commits(x = pkgs$owner_repo)
+
+
+library("dplyr")
+url <- "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/registry.json"
+df <- jsonlite::fromJSON(url)
+(pkgs <- tbl_df(df$packages) \%>\%
+  # filter(on_cran, !cran_archived) \%>\%
+  # filter(name != "pleiades") \%>\%
+  .$url \%>\%
+  gsub('https://github.com/', '', .)
+)
+
+pkgs[3] <- "GuangchuangYu/treeio"
+
+z <- gather_commits(x = pkgs)
+# gather_commits(x = pkgs$owner_repo)
 }
 }

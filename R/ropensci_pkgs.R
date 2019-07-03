@@ -13,6 +13,6 @@ ropensci_pkgs <- function(only_on_cran = FALSE) {
   }
   dplyr::data_frame(
     name = df$packages$name,
-    owner_repo = unlist(stringr::str_extract_all(df$packages$url, "ropensci/.+|ropenscilabs/.+|gmbecker/.+"))
+    owner_repo = unlist(stringr::str_extract_all(df$packages$url, "ropensci/.+|ropenscilabs/.+|gmbecker/.+|CornellLabofOrnithology/.+"))
   )
 }

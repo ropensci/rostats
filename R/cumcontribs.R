@@ -10,7 +10,7 @@
 #' cum_contribs()
 #' cum_contribs(exclude_core = TRUE)
 #' }
-cum_contribs <- function(x = NULL, exclude = c("sckott", "karthik", "cboettig", "jeroenooms", "jeroen"),
+cum_contribs <- function(x = NULL, exclude = c("sckott", "karthik", "cboettig", "jeroenooms", "jeroen", "maelle"),
                          exclude_core = FALSE) {
   dat <- dplyr::tbl_df(get_github(x))
   if (exclude_core) dat <- dplyr::filter(dat, !author %in% exclude)
@@ -31,5 +31,5 @@ cum_contribs <- function(x = NULL, exclude = c("sckott", "karthik", "cboettig", 
     geom_line(size = 2) +
     theme_grey(base_size = 18) +
     scale_x_date(labels = scales::date_format("%Y/%m")) +
-    labs(x = 'May 2011 to May 2016', y = 'Cumulative New Contributors')
+    labs(x = 'May 2011 to Nov 2017', y = 'Cumulative New Contributors')
 }

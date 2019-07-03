@@ -7,7 +7,7 @@
 #' @param exclude (character) github user names to exclude
 #' @param exclude_core (logical) exclude core user names. Default: \code{FALSE}
 #' @examples \dontrun{
-#' cum_commits()
+#' x <- cum_commits()
 #' cum_commits(exclude_core = TRUE)
 #' }
 cum_commits <- function(x = NULL, exclude = c("sckott", "karthik", "cboettig", "jeroenooms", "jeroen"),
@@ -26,5 +26,5 @@ cum_commits <- function(x = NULL, exclude = c("sckott", "karthik", "cboettig", "
     geom_line(size = 2) +
     theme_grey(base_size = 18) +
     scale_x_date(labels = scales::date_format("%Y/%m")) +
-    labs(x = 'May 2011 to May 2016', y = 'Cumulative Code Contributions')
+    labs(x = 'May 2011 to Nov 2017', y = 'Cumulative Code Contributions')
 }

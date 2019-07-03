@@ -61,9 +61,20 @@ gh_repo_issues <- function(owner, repo, state = "open", since = NULL, token = NU
   process_result(res)
 }
 
-gh_issue_comments <- function(owner, repo, state = "open", since = NULL, token = NULL, ...) {
+gh_repo_issues_pagination <- function(owner, repo, state = "open", since = NULL, token = NULL,
+                                      per_page = NULL, page = NULL, ...) {
+  res <- httr::GET(
+    sprintf("https://api.github.com/repos/%s/%s/issues", owner, repo),
+    query = ct(list(state = state, since = since, per_page = per_page, page = page)),
+    get_token(token),
+    ...
+  )
+  process_result(res)
+}
+
+gh_issue_comments <- function(owner, repo, since = NULL, token = NULL, ...) {
   url <- sprintf("https://api.github.com/repos/%s/%s/issues/comments", owner, repo)
-  gh_while(url, ct(list(per_page = 100, since = since)), token, ...)
+  gh_while(url, ct(list(since = since)), token, ...)
 }
 
 gh_repos <- function(owner, type = "public", token = NULL, ...) {

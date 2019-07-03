@@ -21,7 +21,7 @@ Cummulative commits plot
 }
 \examples{
 \dontrun{
-cum_commits()
+x <- cum_commits()
 cum_commits(exclude_core = TRUE)
 }
 }

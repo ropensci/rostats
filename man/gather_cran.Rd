@@ -14,6 +14,8 @@ cran_first_date(x)
 }
 \arguments{
 \item{pkg}{(character) a package name}
+
+\item{x}{a data.frame}
 }
 \description{
 Gather CRAN details
@@ -25,31 +27,26 @@ long, even with hundreds of of pkgs.
 }
 \examples{
 \dontrun{
-gather_cran("taxize")
-
+library("rostats")
 library("ropkgs")
 library("dplyr")
-#df <- ro_pkgs()
 url <- "https://raw.githubusercontent.com/ropensci/roregistry/gh-pages/registry.json"
 df <- jsonlite::fromJSON(url)
 (pkgs <- tbl_df(df$packages) \%>\%
-  filter(on_cran, !cran_archived) \%>\%
-  filter(name != "pleiades") \%>\%
-  # filter(on_cran | on_bioc) \%>\%
+  filter(on_cran | on_bioc) \%>\%
   .$name)
-
-gather_cran(pkgs[1])
+sort(pkgs)
 
 # get first date on CRAN for each pkg
 res <- gather_crans(pkgs)
 alldat <- dplyr::bind_rows(res)
 
-# gather_crans(pkgs$name)
-
 # get new packages on CRAN, arranged by date
-alldat \%>\% cran_first_date() \%>\% arrange(desc(date)) \%>\% top_n(10)
+alldat \%>\% cran_first_date() \%>\% arrange(desc(date)) \%>\% top_n(10) \%>\%
+  readr::write_csv("../biweekly/data/newpkgs.csv")
 
 # get new packages & new versions on CRAN, arranged by date
-alldat \%>\% arrange(desc(date)) \%>\% filter(date > '2017-06-15') \%>\% top_n(30)
+alldat \%>\% arrange(desc(date)) \%>\% filter(date > '2019-04-14') \%>\% top_n(30) \%>\%
+  readr::write_csv("../biweekly/data/newversions.csv")
 }
 }

@@ -2,9 +2,10 @@
 % Please edit documentation in R/gather_downloads.R
 \name{gather_downloads}
 \alias{gather_downloads}
-\title{Get rOpenSci commits}
+\title{Get CRAN downloads}
 \usage{
-gather_downloads(x, from = NULL, to = Sys.Date() - 1, file = Sys.Date())
+gather_downloads(x, from = NULL, to = Sys.Date() - 1,
+  file = Sys.Date())
 }
 \arguments{
 \item{x}{One or more R packages, of the form \code{ropensci/rfishbase},
@@ -24,7 +25,7 @@ writes a data.frame to \code{rappdirs::user_cache_dir("rostats")} +
 '/cran_downloads/', prints message of path to file, and returns file path itself
 }
 \description{
-Get rOpenSci commits
+Get CRAN downloads
 }
 \examples{
 \dontrun{
@@ -37,6 +38,7 @@ pkgs <- tbl_df(df$packages) \%>\%
   sort
 pkgs <- sub("redland-bindings", "redland", pkgs)
 gather_downloads(x = pkgs[1])
+# gather_downloads(x = pkgs[1:3])
 # gather_downloads(x = pkgs)
 }
 }
