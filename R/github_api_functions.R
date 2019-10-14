@@ -61,6 +61,17 @@ gh_repo_issues <- function(owner, repo, state = "open", since = NULL, token = NU
   process_result(res)
 }
 
+# get stats for all releases for a repo
+# gh_releases_stats(owner = "ropensci", repo = "rfishbase", release_id = 17860885)
+gh_releases_stats <- function(owner, repo, release_id, ...) {
+  res <- httr::GET(
+    sprintf("https://api.github.com/repos/%s/%s/releases/%s", owner, repo, release_id),
+    get_token(token)
+    #...
+  )
+  process_result(res)
+}
+
 gh_repo_issues_pagination <- function(owner, repo, state = "open", since = NULL, token = NULL,
                                       per_page = NULL, page = NULL, ...) {
   res <- httr::GET(
